@@ -19,8 +19,8 @@
 *****************/
 
 C_CHANGESTAT_FN(c_ooou) { 
-    Edge e;
-    Vertex change, node3;
+    Edge e, e2, e3;
+    Vertex change, node3, node4, node5;
     int j;
     double tailattr, edgemult;
   
