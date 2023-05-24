@@ -30,24 +30,24 @@ C_CHANGESTAT_FN(c_ooou) {
 
     if (!IS_INEDGE(tail, head)) {
         STEP_THROUGH_OUTEDGES(tail, e, node3) { 
-            if (node3==head) {continue}
+            if (node3==head) {continue;}
             change += IS_INEDGE(tail, node3);
         }     
     }
     
     else {
         STEP_THROUGH_OUTEDGES(tail, e, node3) { 
-            if (node3==head) {continue}
+            if (node3==head) {continue;}
             change -= IS_INEDGE(tail, node3);
         }           
         
         STEP_THROUGH_OUTEDGES(head, e, node3) { 
-            if (node3==tail) {continue}
+            if (node3==tail) {continue;}
             change += !IS_INEDGE(head, node3);
         }  
         
         STEP_THROUGH_OUTEDGES(tail, e, node3) { 
-            if (node3==head) {continue}
+            if (node3==head) {continue;}
             change += !IS_INEDGE(tail, node3);
         }         
     }
