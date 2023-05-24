@@ -27,7 +27,7 @@ C_CHANGESTAT_FN(c_ooou) {
     /* *** don't forget tail -> head */    
     edgemult = edgestate ? -1.0 : 1.0;
     change = 0;
-    printf("edgestate: ", edgestate)
+    printf("edgestate: ", edgestate);
 
     if (!IS_OUTEDGE(head, tail)) {
         STEP_THROUGH_OUTEDGES(tail, e, node3) { 
