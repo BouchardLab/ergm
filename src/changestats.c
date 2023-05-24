@@ -13,6 +13,50 @@
 #include "ergm_edgelist.h"
 
 /********************  changestats:  A    ***********/
+
+/*****************                       
+ changestat: c_ooou (111U type 3 node motif)
+*****************/
+
+C_CHANGESTAT_FN(c_ooou) { 
+    Edge e;
+    Vertex change, node3;
+    int j;
+    double tailattr, edgemult;
+  
+    /* *** don't forget tail -> head */    
+    edgemult = edgestate ? -1.0 : 1.0;
+    change = 0;
+
+    if (!IS_INEDGE(tail, head)) {
+        STEP_THROUGH_OUTEDGES(tail, e, node3) { 
+            if (node3==head) {continue}
+            change += IS_INEDGE(tail, node3);
+        }     
+    }
+    
+    else {
+        STEP_THROUGH_OUTEDGES(tail, e, node3) { 
+            if (node3==head) {continue}
+            change -= IS_INEDGE(tail, node3);
+        }           
+        
+        STEP_THROUGH_OUTEDGES(head, e, node3) { 
+            if (node3==tail) {continue}
+            change += !IS_INEDGE(head, node3);
+        }  
+        
+        STEP_THROUGH_OUTEDGES(tail, e, node3) { 
+            if (node3==head) {continue}
+            change += !IS_INEDGE(tail, node3);
+        }         
+    }
+
+    CHANGE_STAT[0] += edgemult * change;
+   
+}
+
+
 /*****************                       
  changestat: c_absdiff
 *****************/

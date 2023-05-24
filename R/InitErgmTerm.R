@@ -448,6 +448,54 @@ decay_vs_fixed <- function(a, name, no_curved_attrarg=TRUE){
 
 #=======================InitErgmTerm functions:  A============================#
 
+################################################################################
+
+#' @templateVar name ooou (111U type 3 node motif)
+                                                  
+InitErgmTerm.ooou<-function (nw, arglist, ..., version=packageVersion("ergm")) {
+  if(version <= as.package_version("3.9.4")){
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attrname","diff", "levels"),
+                        vartypes = c("character","logical", "character,numeric,logical"),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attrname
+    levels <- if(!is.null(a$levels)) I(a$levels) else NULL                    
+  }else{
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attr","diff", "levels"),
+                        vartypes = c(ERGM_VATTR_SPEC, "logical", ERGM_LEVELS_SPEC),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attr
+    levels <- a$levels  
+  }
+  diff <- a$diff;
+  if(!is.null(attrarg)){
+    nodecov <- ergm_get_vattr(attrarg, nw)
+    attrname <- attr(nodecov, "name")
+    u <- ergm_attr_levels(levels, nodecov, nw, levels = sort(unique(nodecov)))
+    nodecov <- match(nodecov,u,nomatch=length(u)+1)
+    ui <- seq(along=u)
+    if (!diff) {
+      coef.names <- paste("ooou",attrname,sep=".")
+      inputs <- c(nodecov)
+    } else {
+      #  Number of input parameters before covariates equals number of
+      #  unique elements in nodecov, namely length(u)
+      coef.names <- paste("ooou", attrname, u, sep=".")
+      inputs <- c(ui, nodecov)
+      attr(inputs, "ParamsBeforeCov") <- length(ui)
+    }
+  }else{
+#    No attributes (or diff)
+#    No covariates, so no need for "ParamsBeforeCov"
+    coef.names <- "ooou"
+    inputs <- NULL
+  }
+  list(name="ooou", coef.names=coef.names, inputs=inputs, minval = 0)
+}                                                  
+                                                  
 
 ################################################################################
 
