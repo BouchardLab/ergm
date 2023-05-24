@@ -28,27 +28,30 @@ C_CHANGESTAT_FN(c_ooou) {
     edgemult = edgestate ? -1.0 : 1.0;
     change = 0;
 
-    if (!IS_INEDGE(tail, head)) {
+    if (!IS_OUTEDGE(head, tail)) {
         STEP_THROUGH_OUTEDGES(tail, e, node3) { 
             if (node3==head) {continue;}
-            change += IS_INEDGE(tail, node3);
+            change += IS_OUTEDGE(node3, tail);
         }     
     }
     
     else {
         STEP_THROUGH_OUTEDGES(tail, e, node3) { 
             if (node3==head) {continue;}
-            change -= IS_INEDGE(tail, node3);
+            change -= IS_OUTEDGE(node3, tail);
         }           
         
         STEP_THROUGH_OUTEDGES(head, e, node3) { 
             if (node3==tail) {continue;}
-            change += !IS_INEDGE(head, node3);
+            if (!IS_OUTEDGE(node3, head)){
+                change += 1;
+            }
+            
         }  
         
         STEP_THROUGH_OUTEDGES(tail, e, node3) { 
             if (node3==head) {continue;}
-            change += !IS_INEDGE(tail, node3);
+            change += !IS_OUTEDGE(node3, tail);
         }         
     }
 
