@@ -54,7 +54,7 @@ C_CHANGESTAT_FN(c_ooou) {
             change += !IS_OUTEDGE(node5, tail);
         }         
     }
-    printf("value of cccccccccchange: %d\n", edgemult * change);
+    printf("value of changestat: %d\n", CHANGE_STAT[0]);
     CHANGE_STAT[0] += edgemult * change;
    
 }
