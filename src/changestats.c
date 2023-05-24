@@ -41,17 +41,17 @@ C_CHANGESTAT_FN(c_ooou) {
             change -= IS_OUTEDGE(node3, tail);
         }           
         
-        STEP_THROUGH_OUTEDGES(head, e, node3) { 
-            if (node3==tail) {continue;}
-            if (!IS_OUTEDGE(node3, head)){
+        STEP_THROUGH_OUTEDGES(head, e2, node4) { 
+            if (node4==tail) {continue;}
+            if (!IS_OUTEDGE(node4, head)){
                 change += 1;
             }
             
         }  
         
-        STEP_THROUGH_OUTEDGES(tail, e, node3) { 
-            if (node3==head) {continue;}
-            change += !IS_OUTEDGE(node3, tail);
+        STEP_THROUGH_OUTEDGES(tail, e3, node5) { 
+            if (node5==head) {continue;}
+            change += !IS_OUTEDGE(node5, tail);
         }         
     }
 
