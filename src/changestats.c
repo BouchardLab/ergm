@@ -32,6 +32,7 @@ C_CHANGESTAT_FN(c_ooou) {
         STEP_THROUGH_OUTEDGES(tail, e, node3) { 
             if (node3==head) {continue;}
             change += IS_OUTEDGE(node3, tail);
+            printf("value of change0: %d\n", change);
         }     
     }
     
