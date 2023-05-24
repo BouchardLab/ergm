@@ -21,11 +21,11 @@
 C_CHANGESTAT_FN(c_ooou) { 
     Edge e, e2, e3;
     Vertex change, node3, node4, node5;
-    int j;
-    double tailattr, edgemult;
+    int j, edgemult;
+    double tailattr;
   
     /* *** don't forget tail -> head */    
-    edgemult = edgestate ? -1.0 : 1.0;
+    edgemult = edgestate ? -1 : 1;
     change = 0;
     printf("edgemult: %d\n", edgemult);
 
