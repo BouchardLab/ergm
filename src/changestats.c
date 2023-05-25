@@ -15,47 +15,79 @@
 /********************  changestats:  A    ***********/
 
 /*****************                       
- changestat: c_ooou (111U type 3 node motif)
+ changestat: c_ooou (111U type 3 node motif) A<--B<-->C
 *****************/
 
 C_CHANGESTAT_FN(c_ooou) { 
     Edge e, e2, e3;
-    Vertex change, node3, node4, node5;
-    int j, edgemult;
-    double tailattr;
+    Vertex node3, node4, node5;
+    int j, change;
+    double tailattr, edgemult;
   
     /* *** don't forget tail -> head */    
-    edgemult = edgestate ? -1 : 1;
+    /*edgemult = edgestate ? -1.0 : 1.0;*/
     change = 0;
+    
+    
 
     if (!IS_OUTEDGE(head, tail)) {
         STEP_THROUGH_OUTEDGES(tail, e, node3) { 
-            if (node3==head) {continue;}
-            change += IS_OUTEDGE(node3, tail);
-        }     
+            if (node3!=head) {
+                if (IS_INEDGE(node3, head) || IS_OUTEDGE(node3, head)){
+                    if (IS_OUTEDGE(node3, tail) && IS_OUTEDGE(node3, head) && !IS_INEDGE(node3, head)){
+                        change -= 1;
+                    }
+                    continue;
+                }
+                change += IS_OUTEDGE(node3, tail);
+            }  
+        } 
+        STEP_THROUGH_INEDGES(tail, e2, node4) { 
+            if (!IS_OUTEDGE(tail, node4) && IS_OUTEDGE(node4, head) && IS_INEDGE(node4, head)){
+                change -= 1;
+            }                             
+        }
     }
     
     else {
-        STEP_THROUGH_OUTEDGES(tail, e, node3) { 
-            if (node3==head) {continue;}
-            change -= IS_OUTEDGE(node3, tail);
-        }           
-        
-        STEP_THROUGH_OUTEDGES(head, e2, node4) { 
-            if (node4==tail) {continue;}
-            if (!IS_OUTEDGE(node4, head)){
-                change += 1;
+        STEP_THROUGH_OUTEDGES(head, e, node3) { 
+            if (node3!=tail) {
+                if (IS_INEDGE(node3, tail) || IS_OUTEDGE(node3, tail)){
+                    continue;
+                }                
+                change -= IS_OUTEDGE(node3, head);
             }
             
+        }   
+        
+        STEP_THROUGH_OUTEDGES(head, e2, node4) { 
+            if (node4!=tail) {
+                if (IS_INEDGE(node4, tail) || IS_OUTEDGE(node4, tail)){
+                    continue;
+                }                      
+              change += !IS_OUTEDGE(node4, head);   
+             }
         }  
         
         STEP_THROUGH_OUTEDGES(tail, e3, node5) { 
-            if (node5==head) {continue;}
-            change += !IS_OUTEDGE(node5, tail);
-        }         
+            if (node5!=head) {
+                if (IS_INEDGE(node5, head) || IS_OUTEDGE(node5, head)){
+                    continue;
+                }                      
+                change += !IS_OUTEDGE(node5, tail);
+            }
+
+        }                  
+        
+   
     }
-    printf("value of changestat: %d\n", CHANGE_STAT[0]);
-    CHANGE_STAT[0] += edgemult * change;
+    
+    CHANGE_STAT[0] += edgestate ? -change : change;
+    /*printf("value of changestat[0] after: %f\n", CHANGE_STAT[0]);
+    if (CHANGE_STAT[0]!=0){
+        printf("(%i,%i), %f \n",tail,head,CHANGE_STAT[0]);
+    }*/
+        
    
 }
 
