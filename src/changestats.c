@@ -15,20 +15,3312 @@
 /********************  changestats:  A    ***********/
 
 /*****************                       
+ changestat: c_oooum (111U type 3 node motif) matrix mask method A<--B<-->C
+*****************/
+
+C_CHANGESTAT_FN(c_t021D) { 
+    Edge e;
+    Vertex node3;
+    int change = 0;
+    
+    
+    int np = 3;    
+    int edge[3][9] = {{0, 0, 0, 1, 0, 1, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 1, 1, 0}, {0, 1, 1, 0, 0, 0, 0, 0, 0}};
+
+    
+    
+    int track_lst[573];
+    /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
+    for (int i = 1; i < 574; i++){
+        track_lst[i]=0;
+    }
+    track_lst[head] = 1;
+    track_lst[tail] = 1;
+    
+    int adj[9];
+    
+    adj[0] = 0;
+    adj[4] = 0;
+    adj[8] = 0;
+    adj[3] = IS_OUTEDGE(head, tail);
+    
+  
+   
+   /* these for-loops are the CHANGE checking processes */
+    STEP_THROUGH_OUTEDGES(head, e, node3) {
+        
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;        
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }   
+    }  
+
+    STEP_THROUGH_INEDGES(head, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;  
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }             
+    }          
+     
+    STEP_THROUGH_OUTEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;     
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }           
+    }                              
+    
+    STEP_THROUGH_INEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1; 
+        
+        int failed0 = 0;
+        int failed1 = 0;
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }          
+
+    }   
+
+    CHANGE_STAT[0] += edgestate ? -change : change;
+    /*printf("value of changestat[0] after: %f\n", CHANGE_STAT[0]);
+    if (CHANGE_STAT[0]!=0){
+        printf("(%i,%i), %f \n",tail,head,CHANGE_STAT[0]);
+    }*/    
+}
+
+C_CHANGESTAT_FN(c_t021U) { 
+    Edge e;
+    Vertex node3;
+    int change = 0;
+   
+    int np = 3;    
+    int edge[3][9] = {{0, 1, 0, 0, 0, 0, 0, 1, 0}, {0, 0, 1, 0, 0, 1, 0, 0, 0}, {0, 0, 0, 1, 0, 0, 1, 0, 0}};
+    
+
+    /*int edge[6][9] = {{0, 1, 0, 1, 0, 1, 0, 0, 0},{0, 0, 1, 0, 0, 0, 1, 1, 0}, {0, 1, 1, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 1, 1, 1, 0}, {0, 1, 1, 0, 0, 0, 1, 0, 0}, {0, 0, 0, 1, 0, 1, 0, 1, 0}};*/
+    
+    
+    int track_lst[573];
+    /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
+    for (int i = 1; i < 574; i++){
+        track_lst[i]=0;
+    }
+    track_lst[head] = 1;
+    track_lst[tail] = 1;
+    
+    int adj[9];
+    
+    adj[0] = 0;
+    adj[4] = 0;
+    adj[8] = 0;
+    adj[3] = IS_OUTEDGE(head, tail);
+    
+  
+   
+   /* these for-loops are the CHANGE checking processes */
+    STEP_THROUGH_OUTEDGES(head, e, node3) {
+        
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;        
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }   
+    }  
+
+    STEP_THROUGH_INEDGES(head, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;  
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }             
+    }          
+     
+    STEP_THROUGH_OUTEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;     
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }           
+    }                              
+    
+    STEP_THROUGH_INEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1; 
+        
+        int failed0 = 0;
+        int failed1 = 0;
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }          
+
+    }   
+
+    CHANGE_STAT[0] += edgestate ? -change : change;
+    /*printf("value of changestat[0] after: %f\n", CHANGE_STAT[0]);
+    if (CHANGE_STAT[0]!=0){
+        printf("(%i,%i), %f \n",tail,head,CHANGE_STAT[0]);
+    }*/    
+}
+
+C_CHANGESTAT_FN(c_t021C) { 
+    Edge e;
+    Vertex node3;
+    int change = 0;
+    
+    
+    int np = 6;    
+    int edge[6][9] = {{0, 1, 0, 0, 0, 1, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 1, 0}, {0, 0, 1, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 1, 1, 0, 0}, {0, 1, 0, 0, 0, 0, 1, 0, 0}, {0, 0, 0, 1, 0, 0, 0, 1, 0}};
+
+    
+    int track_lst[573];
+    /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
+    for (int i = 1; i < 574; i++){
+        track_lst[i]=0;
+    }
+    track_lst[head] = 1;
+    track_lst[tail] = 1;
+    
+    int adj[9];
+    
+    adj[0] = 0;
+    adj[4] = 0;
+    adj[8] = 0;
+    adj[3] = IS_OUTEDGE(head, tail);
+    
+  
+   
+   /* these for-loops are the CHANGE checking processes */
+    STEP_THROUGH_OUTEDGES(head, e, node3) {
+        
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;        
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }   
+    }  
+
+    STEP_THROUGH_INEDGES(head, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;  
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }             
+    }          
+     
+    STEP_THROUGH_OUTEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;     
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }           
+    }                              
+    
+    STEP_THROUGH_INEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1; 
+        
+        int failed0 = 0;
+        int failed1 = 0;
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }          
+
+    }   
+
+    CHANGE_STAT[0] += edgestate ? -change : change;
+    /*printf("value of changestat[0] after: %f\n", CHANGE_STAT[0]);
+    if (CHANGE_STAT[0]!=0){
+        printf("(%i,%i), %f \n",tail,head,CHANGE_STAT[0]);
+    }*/    
+}
+
+C_CHANGESTAT_FN(c_t111D) { 
+    Edge e;
+    Vertex node3;
+    int change = 0;
+    
+    
+    int np = 6;    
+    int edge[6][9] = {{0, 1, 0, 1, 0, 0, 0, 1, 0}, {0, 0, 1, 0, 0, 1, 1, 0, 0}, {0, 1, 0, 1, 0, 0, 1, 0, 0}, {0, 0, 1, 0, 0, 1, 0, 1, 0}, {0, 0, 1, 1, 0, 0, 1, 0, 0}, {0, 1, 0, 0, 0, 1, 0, 1, 0}};
+
+    
+    int track_lst[573];
+    /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
+    for (int i = 1; i < 574; i++){
+        track_lst[i]=0;
+    }
+    track_lst[head] = 1;
+    track_lst[tail] = 1;
+    
+    int adj[9];
+    
+    adj[0] = 0;
+    adj[4] = 0;
+    adj[8] = 0;
+    adj[3] = IS_OUTEDGE(head, tail);
+    
+  
+   
+   /* these for-loops are the CHANGE checking processes */
+    STEP_THROUGH_OUTEDGES(head, e, node3) {
+        
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;        
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }   
+    }  
+
+    STEP_THROUGH_INEDGES(head, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;  
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }             
+    }          
+     
+    STEP_THROUGH_OUTEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;     
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }           
+    }                              
+    
+    STEP_THROUGH_INEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1; 
+        
+        int failed0 = 0;
+        int failed1 = 0;
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }          
+
+    }   
+
+    CHANGE_STAT[0] += edgestate ? -change : change;
+    /*printf("value of changestat[0] after: %f\n", CHANGE_STAT[0]);
+    if (CHANGE_STAT[0]!=0){
+        printf("(%i,%i), %f \n",tail,head,CHANGE_STAT[0]);
+    }*/    
+}
+
+C_CHANGESTAT_FN(c_t111U) { 
+    Edge e;
+    Vertex node3;
+    int change = 0;
+    
+    
+    int np = 6;    
+
+    int edge[6][9] = {{0, 1, 0, 1, 0, 1, 0, 0, 0},{0, 0, 1, 0, 0, 0, 1, 1, 0}, {0, 1, 1, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 1, 1, 1, 0}, {0, 1, 1, 0, 0, 0, 1, 0, 0}, {0, 0, 0, 1, 0, 1, 0, 1, 0}};
+    
+    
+    int track_lst[573];
+    /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
+    for (int i = 1; i < 574; i++){
+        track_lst[i]=0;
+    }
+    track_lst[head] = 1;
+    track_lst[tail] = 1;
+    
+    int adj[9];
+    
+    adj[0] = 0;
+    adj[4] = 0;
+    adj[8] = 0;
+    adj[3] = IS_OUTEDGE(head, tail);
+    
+  
+   
+   /* these for-loops are the CHANGE checking processes */
+    STEP_THROUGH_OUTEDGES(head, e, node3) {
+        
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;        
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }   
+    }  
+
+    STEP_THROUGH_INEDGES(head, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;  
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }             
+    }          
+     
+    STEP_THROUGH_OUTEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;     
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }           
+    }                              
+    
+    STEP_THROUGH_INEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1; 
+        
+        int failed0 = 0;
+        int failed1 = 0;
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }          
+
+    }   
+
+    CHANGE_STAT[0] += edgestate ? -change : change;
+    /*printf("value of changestat[0] after: %f\n", CHANGE_STAT[0]);
+    if (CHANGE_STAT[0]!=0){
+        printf("(%i,%i), %f \n",tail,head,CHANGE_STAT[0]);
+    }*/    
+}
+
+C_CHANGESTAT_FN(c_t030T) { 
+    Edge e;
+    Vertex node3;
+    int change = 0;
+    
+    
+    int np = 6;    
+    int edge[6][9] = {{0, 1, 1, 0, 0, 0, 0, 1, 0}, {0, 1, 1, 0, 0, 1, 0, 0, 0}, {0, 0, 0, 1, 0, 1, 1, 0, 0}, {0, 0, 1, 1, 0, 1, 0, 0, 0}, {0, 0, 0, 1, 0, 0, 1, 1, 0}, {0, 1, 0, 0, 0, 0, 1, 1, 0}};
+    
+    
+    int track_lst[573];
+    /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
+    for (int i = 1; i < 574; i++){
+        track_lst[i]=0;
+    }
+    track_lst[head] = 1;
+    track_lst[tail] = 1;
+    
+    int adj[9];
+    
+    adj[0] = 0;
+    adj[4] = 0;
+    adj[8] = 0;
+    adj[3] = IS_OUTEDGE(head, tail);
+    
+  
+   
+   /* these for-loops are the CHANGE checking processes */
+    STEP_THROUGH_OUTEDGES(head, e, node3) {
+        
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;        
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }   
+    }  
+
+    STEP_THROUGH_INEDGES(head, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;  
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }             
+    }          
+     
+    STEP_THROUGH_OUTEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;     
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }           
+    }                              
+    
+    STEP_THROUGH_INEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1; 
+        
+        int failed0 = 0;
+        int failed1 = 0;
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }          
+
+    }   
+
+    CHANGE_STAT[0] += edgestate ? -change : change;
+    /*printf("value of changestat[0] after: %f\n", CHANGE_STAT[0]);
+    if (CHANGE_STAT[0]!=0){
+        printf("(%i,%i), %f \n",tail,head,CHANGE_STAT[0]);
+    }*/    
+}
+
+C_CHANGESTAT_FN(c_t030C) { 
+    Edge e;
+    Vertex node3;
+    int change = 0;
+    
+    
+    int np = 2;    
+    int edge[2][9] = {{0, 1, 0, 0, 0, 1, 1, 0, 0}, {0, 0, 1, 1, 0, 0, 0, 1, 0}};
+    
+    
+    int track_lst[573];
+    /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
+    for (int i = 1; i < 574; i++){
+        track_lst[i]=0;
+    }
+    track_lst[head] = 1;
+    track_lst[tail] = 1;
+    
+    int adj[9];
+    
+    adj[0] = 0;
+    adj[4] = 0;
+    adj[8] = 0;
+    adj[3] = IS_OUTEDGE(head, tail);
+    
+  
+   
+   /* these for-loops are the CHANGE checking processes */
+    STEP_THROUGH_OUTEDGES(head, e, node3) {
+        
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;        
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }   
+    }  
+
+    STEP_THROUGH_INEDGES(head, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;  
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }             
+    }          
+     
+    STEP_THROUGH_OUTEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;     
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }           
+    }                              
+    
+    STEP_THROUGH_INEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1; 
+        
+        int failed0 = 0;
+        int failed1 = 0;
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }          
+
+    }   
+
+    CHANGE_STAT[0] += edgestate ? -change : change;
+    /*printf("value of changestat[0] after: %f\n", CHANGE_STAT[0]);
+    if (CHANGE_STAT[0]!=0){
+        printf("(%i,%i), %f \n",tail,head,CHANGE_STAT[0]);
+    }*/    
+}
+
+C_CHANGESTAT_FN(c_t201) { 
+    Edge e;
+    Vertex node3;
+    int change = 0;
+    
+    
+    int np = 3;    
+    int edge[3][9] = {{0, 1, 0, 1, 0, 1, 0, 1, 0}, {0, 0, 1, 0, 0, 1, 1, 1, 0}, {0, 1, 1, 1, 0, 0, 1, 0, 0}};
+    
+    int track_lst[573];
+    /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
+    for (int i = 1; i < 574; i++){
+        track_lst[i]=0;
+    }
+    track_lst[head] = 1;
+    track_lst[tail] = 1;
+    
+    int adj[9];
+    
+    adj[0] = 0;
+    adj[4] = 0;
+    adj[8] = 0;
+    adj[3] = IS_OUTEDGE(head, tail);
+    
+  
+   
+   /* these for-loops are the CHANGE checking processes */
+    STEP_THROUGH_OUTEDGES(head, e, node3) {
+        
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;        
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }   
+    }  
+
+    STEP_THROUGH_INEDGES(head, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;  
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }             
+    }          
+     
+    STEP_THROUGH_OUTEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;     
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }           
+    }                              
+    
+    STEP_THROUGH_INEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1; 
+        
+        int failed0 = 0;
+        int failed1 = 0;
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }          
+
+    }   
+
+    CHANGE_STAT[0] += edgestate ? -change : change;
+    /*printf("value of changestat[0] after: %f\n", CHANGE_STAT[0]);
+    if (CHANGE_STAT[0]!=0){
+        printf("(%i,%i), %f \n",tail,head,CHANGE_STAT[0]);
+    }*/    
+}
+
+C_CHANGESTAT_FN(c_t120D) { 
+    Edge e;
+    Vertex node3;
+    int change = 0;
+    
+    
+    int np = 3;    
+    int edge[3][9] = {{0, 0, 1, 1, 0, 1, 1, 0, 0}, {0, 1, 0, 1, 0, 0, 1, 1, 0}, {0, 1, 1, 0, 0, 1, 0, 1, 0}};
+    
+    
+    int track_lst[573];
+    /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
+    for (int i = 1; i < 574; i++){
+        track_lst[i]=0;
+    }
+    track_lst[head] = 1;
+    track_lst[tail] = 1;
+    
+    int adj[9];
+    
+    adj[0] = 0;
+    adj[4] = 0;
+    adj[8] = 0;
+    adj[3] = IS_OUTEDGE(head, tail);
+    
+  
+   
+   /* these for-loops are the CHANGE checking processes */
+    STEP_THROUGH_OUTEDGES(head, e, node3) {
+        
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;        
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }   
+    }  
+
+    STEP_THROUGH_INEDGES(head, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;  
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }             
+    }          
+     
+    STEP_THROUGH_OUTEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;     
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }           
+    }                              
+    
+    STEP_THROUGH_INEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1; 
+        
+        int failed0 = 0;
+        int failed1 = 0;
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }          
+
+    }   
+
+    CHANGE_STAT[0] += edgestate ? -change : change;
+    /*printf("value of changestat[0] after: %f\n", CHANGE_STAT[0]);
+    if (CHANGE_STAT[0]!=0){
+        printf("(%i,%i), %f \n",tail,head,CHANGE_STAT[0]);
+    }*/    
+}
+
+C_CHANGESTAT_FN(c_t120U) { 
+    Edge e;
+    Vertex node3;
+    int change = 0;
+    
+    
+    int np = 3;    
+    int edge[3][9] = {{0, 1, 1, 0, 0, 0, 1, 1, 0}, {0, 1, 1, 1, 0, 1, 0, 0, 0}, {0, 0, 0, 1, 0, 1, 1, 1, 0}};
+    
+    int track_lst[573];
+    /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
+    for (int i = 1; i < 574; i++){
+        track_lst[i]=0;
+    }
+    track_lst[head] = 1;
+    track_lst[tail] = 1;
+    
+    int adj[9];
+    
+    adj[0] = 0;
+    adj[4] = 0;
+    adj[8] = 0;
+    adj[3] = IS_OUTEDGE(head, tail);
+    
+  
+   
+   /* these for-loops are the CHANGE checking processes */
+    STEP_THROUGH_OUTEDGES(head, e, node3) {
+        
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;        
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }   
+    }  
+
+    STEP_THROUGH_INEDGES(head, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;  
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }             
+    }          
+     
+    STEP_THROUGH_OUTEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;     
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }           
+    }                              
+    
+    STEP_THROUGH_INEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1; 
+        
+        int failed0 = 0;
+        int failed1 = 0;
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }          
+
+    }   
+
+    CHANGE_STAT[0] += edgestate ? -change : change;
+    /*printf("value of changestat[0] after: %f\n", CHANGE_STAT[0]);
+    if (CHANGE_STAT[0]!=0){
+        printf("(%i,%i), %f \n",tail,head,CHANGE_STAT[0]);
+    }*/    
+}
+
+C_CHANGESTAT_FN(c_t120C) { 
+    Edge e;
+    Vertex node3;
+    int change = 0;
+    
+    
+    int np = 6;    
+    int edge[6][9] = {{0, 1, 1, 0, 0, 1, 1, 0, 0}, {0, 1, 1, 1, 0, 0, 0, 1, 0}, {0, 0, 1, 1, 0, 1, 0, 1, 0}, {0, 1, 0, 1, 0, 1, 1, 0, 0}, {0, 1, 0, 0, 0, 1, 1, 1, 0}, {0, 0, 1, 1, 0, 0, 1, 1, 0}};
+    
+    
+    int track_lst[573];
+    /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
+    for (int i = 1; i < 574; i++){
+        track_lst[i]=0;
+    }
+    track_lst[head] = 1;
+    track_lst[tail] = 1;
+    
+    int adj[9];
+    
+    adj[0] = 0;
+    adj[4] = 0;
+    adj[8] = 0;
+    adj[3] = IS_OUTEDGE(head, tail);
+    
+  
+   
+   /* these for-loops are the CHANGE checking processes */
+    STEP_THROUGH_OUTEDGES(head, e, node3) {
+        
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;        
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }   
+    }  
+
+    STEP_THROUGH_INEDGES(head, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;  
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }             
+    }          
+     
+    STEP_THROUGH_OUTEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;     
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }           
+    }                              
+    
+    STEP_THROUGH_INEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1; 
+        
+        int failed0 = 0;
+        int failed1 = 0;
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }          
+
+    }   
+
+    CHANGE_STAT[0] += edgestate ? -change : change;
+    /*printf("value of changestat[0] after: %f\n", CHANGE_STAT[0]);
+    if (CHANGE_STAT[0]!=0){
+        printf("(%i,%i), %f \n",tail,head,CHANGE_STAT[0]);
+    }*/    
+}
+
+C_CHANGESTAT_FN(c_t210) { 
+    Edge e;
+    Vertex node3;
+    int change = 0;
+    
+    
+    int np = 6;    
+    int edge[6][9] = {{0, 1, 1, 0, 0, 1, 1, 1, 0}, {0, 1, 1, 1, 0, 1, 0, 1, 0}, {0, 0, 1, 1, 0, 1, 1, 1, 0}, {0, 1, 1, 1, 0, 1, 1, 0, 0}, {0, 1, 0, 1, 0, 1, 1, 1, 0}, {0, 1, 1, 1, 0, 0, 1, 1, 0}};
+    
+    
+    int track_lst[573];
+    /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
+    for (int i = 1; i < 574; i++){
+        track_lst[i]=0;
+    }
+    track_lst[head] = 1;
+    track_lst[tail] = 1;
+    
+    int adj[9];
+    
+    adj[0] = 0;
+    adj[4] = 0;
+    adj[8] = 0;
+    adj[3] = IS_OUTEDGE(head, tail);
+    
+  
+   
+   /* these for-loops are the CHANGE checking processes */
+    STEP_THROUGH_OUTEDGES(head, e, node3) {
+        
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;        
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }   
+    }  
+
+    STEP_THROUGH_INEDGES(head, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;  
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }             
+    }          
+     
+    STEP_THROUGH_OUTEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;     
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }           
+    }                              
+    
+    STEP_THROUGH_INEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1; 
+        
+        int failed0 = 0;
+        int failed1 = 0;
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }          
+
+    }   
+
+    CHANGE_STAT[0] += edgestate ? -change : change;
+    /*printf("value of changestat[0] after: %f\n", CHANGE_STAT[0]);
+    if (CHANGE_STAT[0]!=0){
+        printf("(%i,%i), %f \n",tail,head,CHANGE_STAT[0]);
+    }*/    
+}
+
+C_CHANGESTAT_FN(c_t300) { 
+    Edge e;
+    Vertex node3;
+    int change = 0;
+    
+    
+    int np = 1;    
+    int edge[1][9] = {{0, 1, 1, 1, 0, 1, 1, 1, 0}};
+    
+    
+    int track_lst[573];
+    /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
+    for (int i = 1; i < 574; i++){
+        track_lst[i]=0;
+    }
+    track_lst[head] = 1;
+    track_lst[tail] = 1;
+    
+    int adj[9];
+    
+    adj[0] = 0;
+    adj[4] = 0;
+    adj[8] = 0;
+    adj[3] = IS_OUTEDGE(head, tail);
+    
+  
+   
+   /* these for-loops are the CHANGE checking processes */
+    STEP_THROUGH_OUTEDGES(head, e, node3) {
+        
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;        
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }   
+    }  
+
+    STEP_THROUGH_INEDGES(head, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;  
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }             
+    }          
+     
+    STEP_THROUGH_OUTEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1;     
+        
+        int failed0 = 0;
+        int failed1 = 0;       
+                
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }           
+    }                              
+    
+    STEP_THROUGH_INEDGES(tail, e, node3) {
+        if (track_lst[node3]){
+            continue;
+        }
+        track_lst[node3] = 1; 
+        
+        int failed0 = 0;
+        int failed1 = 0;
+        
+        adj[2] = IS_OUTEDGE(tail, node3);
+        adj[5] = IS_OUTEDGE(head, node3);    
+        adj[6] = IS_OUTEDGE(node3, tail);
+        adj[7] = IS_OUTEDGE(node3, head);
+        
+        adj[1] = 0;
+        for (int p = 0; p<np; p++){
+            failed0 = 0;        
+            for (int i = 0; i<9; i++){
+                if (adj[i]!=edge[p][i]) {
+                    failed0 = 1;
+                    break;
+                }
+            }
+            if (failed0) {
+                continue;
+            }
+            else {
+                change-=1;
+                failed1 = 1;
+                break;
+            }         
+        }
+
+        if (!failed1) {
+            adj[1] = 1;
+            for (int p = 0; p<np; p++){
+                failed1 = 0;
+                for(int i = 0; i<9; i++){
+                    if (adj[i]!=edge[p][i]) {
+                        failed1 = 1;
+                        break;
+                    }                
+                }  
+                if (failed1) {
+                    continue;
+                }
+                else {
+                    change+=1;
+                    break;
+                }            
+            }            
+        }          
+
+    }   
+
+    CHANGE_STAT[0] += edgestate ? -change : change;
+    /*printf("value of changestat[0] after: %f\n", CHANGE_STAT[0]);
+    if (CHANGE_STAT[0]!=0){
+        printf("(%i,%i), %f \n",tail,head,CHANGE_STAT[0]);
+    }*/    
+}
+
+
+/*****************                       
  changestat: c_ooou (111U type 3 node motif) A<--B<-->C
 *****************/
 
 C_CHANGESTAT_FN(c_ooou) { 
     Edge e, e2, e3;
     Vertex node3, node4, node5;
-    int j, change;
-    double tailattr, edgemult;
+    int change;
   
     /* *** don't forget tail -> head */    
-    /*edgemult = edgestate ? -1.0 : 1.0;*/
     change = 0;
-    
-    
 
     if (!IS_OUTEDGE(head, tail)) {
         STEP_THROUGH_OUTEDGES(tail, e, node3) { 

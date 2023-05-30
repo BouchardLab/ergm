@@ -444,10 +444,635 @@ decay_vs_fixed <- function(a, name, no_curved_attrarg=TRUE){
     list(minval=0, maxval=smax, dependence=TRUE, name=name, coef.names=coef.names, inputs=inputs, conflicts.constraints=paste0(deg,"degreedist"))
   }
 }
+                                                  
 
 
 #=======================InitErgmTerm functions:  A============================#
+################################################################################
 
+#' @templateVar name oooum (mask version of 021D type 3 node motif)
+                                                  
+InitErgmTerm.t021D<-function (nw, arglist, ..., version=packageVersion("ergm")) {
+  if(version <= as.package_version("3.9.4")){
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attrname","diff", "levels"),
+                        vartypes = c("character","logical", "character,numeric,logical"),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attrname
+    levels <- if(!is.null(a$levels)) I(a$levels) else NULL                    
+  }else{
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attr","diff", "levels"),
+                        vartypes = c(ERGM_VATTR_SPEC, "logical", ERGM_LEVELS_SPEC),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attr
+    levels <- a$levels  
+  }
+  diff <- a$diff;
+  if(!is.null(attrarg)){
+    nodecov <- ergm_get_vattr(attrarg, nw)
+    attrname <- attr(nodecov, "name")
+    u <- ergm_attr_levels(levels, nodecov, nw, levels = sort(unique(nodecov)))
+    nodecov <- match(nodecov,u,nomatch=length(u)+1)
+    ui <- seq(along=u)
+    if (!diff) {
+      coef.names <- paste("t021D",attrname,sep=".")
+      inputs <- c(nodecov)
+    } else {
+      #  Number of input parameters before covariates equals number of
+      #  unique elements in nodecov, namely length(u)
+      coef.names <- paste("t021D", attrname, u, sep=".")
+      inputs <- c(ui, nodecov)
+      attr(inputs, "ParamsBeforeCov") <- length(ui)
+    }
+  }else{
+#    No attributes (or diff)
+#    No covariates, so no need for "ParamsBeforeCov"
+    coef.names <- "t021D"
+    inputs <- NULL
+  }
+  list(name="t021D", coef.names=coef.names, inputs=inputs, minval = 0)
+}   
+                                                  
+################################################################################
+
+#' @templateVar name oooum (mask version of 021U type 3 node motif)
+                                                  
+InitErgmTerm.t021U<-function (nw, arglist, ..., version=packageVersion("ergm")) {
+  if(version <= as.package_version("3.9.4")){
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attrname","diff", "levels"),
+                        vartypes = c("character","logical", "character,numeric,logical"),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attrname
+    levels <- if(!is.null(a$levels)) I(a$levels) else NULL                    
+  }else{
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attr","diff", "levels"),
+                        vartypes = c(ERGM_VATTR_SPEC, "logical", ERGM_LEVELS_SPEC),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attr
+    levels <- a$levels  
+  }
+  diff <- a$diff;
+  if(!is.null(attrarg)){
+    nodecov <- ergm_get_vattr(attrarg, nw)
+    attrname <- attr(nodecov, "name")
+    u <- ergm_attr_levels(levels, nodecov, nw, levels = sort(unique(nodecov)))
+    nodecov <- match(nodecov,u,nomatch=length(u)+1)
+    ui <- seq(along=u)
+    if (!diff) {
+      coef.names <- paste("t021U",attrname,sep=".")
+      inputs <- c(nodecov)
+    } else {
+      #  Number of input parameters before covariates equals number of
+      #  unique elements in nodecov, namely length(u)
+      coef.names <- paste("t021U", attrname, u, sep=".")
+      inputs <- c(ui, nodecov)
+      attr(inputs, "ParamsBeforeCov") <- length(ui)
+    }
+  }else{
+#    No attributes (or diff)
+#    No covariates, so no need for "ParamsBeforeCov"
+    coef.names <- "t021U"
+    inputs <- NULL
+  }
+  list(name="t021U", coef.names=coef.names, inputs=inputs, minval = 0)
+}   
+                                                  
+################################################################################
+
+#' @templateVar name oooum (mask version of 021C type 3 node motif)
+                                                  
+InitErgmTerm.t021C<-function (nw, arglist, ..., version=packageVersion("ergm")) {
+  if(version <= as.package_version("3.9.4")){
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attrname","diff", "levels"),
+                        vartypes = c("character","logical", "character,numeric,logical"),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attrname
+    levels <- if(!is.null(a$levels)) I(a$levels) else NULL                    
+  }else{
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attr","diff", "levels"),
+                        vartypes = c(ERGM_VATTR_SPEC, "logical", ERGM_LEVELS_SPEC),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attr
+    levels <- a$levels  
+  }
+  diff <- a$diff;
+  if(!is.null(attrarg)){
+    nodecov <- ergm_get_vattr(attrarg, nw)
+    attrname <- attr(nodecov, "name")
+    u <- ergm_attr_levels(levels, nodecov, nw, levels = sort(unique(nodecov)))
+    nodecov <- match(nodecov,u,nomatch=length(u)+1)
+    ui <- seq(along=u)
+    if (!diff) {
+      coef.names <- paste("t021C",attrname,sep=".")
+      inputs <- c(nodecov)
+    } else {
+      #  Number of input parameters before covariates equals number of
+      #  unique elements in nodecov, namely length(u)
+      coef.names <- paste("t021C", attrname, u, sep=".")
+      inputs <- c(ui, nodecov)
+      attr(inputs, "ParamsBeforeCov") <- length(ui)
+    }
+  }else{
+#    No attributes (or diff)
+#    No covariates, so no need for "ParamsBeforeCov"
+    coef.names <- "t021C"
+    inputs <- NULL
+  }
+  list(name="t021C", coef.names=coef.names, inputs=inputs, minval = 0)
+}   
+                                                  
+################################################################################
+
+#' @templateVar name oooum (mask version of 111D type 3 node motif)
+                                                  
+InitErgmTerm.t111D<-function (nw, arglist, ..., version=packageVersion("ergm")) {
+  if(version <= as.package_version("3.9.4")){
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attrname","diff", "levels"),
+                        vartypes = c("character","logical", "character,numeric,logical"),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attrname
+    levels <- if(!is.null(a$levels)) I(a$levels) else NULL                    
+  }else{
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attr","diff", "levels"),
+                        vartypes = c(ERGM_VATTR_SPEC, "logical", ERGM_LEVELS_SPEC),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attr
+    levels <- a$levels  
+  }
+  diff <- a$diff;
+  if(!is.null(attrarg)){
+    nodecov <- ergm_get_vattr(attrarg, nw)
+    attrname <- attr(nodecov, "name")
+    u <- ergm_attr_levels(levels, nodecov, nw, levels = sort(unique(nodecov)))
+    nodecov <- match(nodecov,u,nomatch=length(u)+1)
+    ui <- seq(along=u)
+    if (!diff) {
+      coef.names <- paste("t111D",attrname,sep=".")
+      inputs <- c(nodecov)
+    } else {
+      #  Number of input parameters before covariates equals number of
+      #  unique elements in nodecov, namely length(u)
+      coef.names <- paste("t111D", attrname, u, sep=".")
+      inputs <- c(ui, nodecov)
+      attr(inputs, "ParamsBeforeCov") <- length(ui)
+    }
+  }else{
+#    No attributes (or diff)
+#    No covariates, so no need for "ParamsBeforeCov"
+    coef.names <- "t111D"
+    inputs <- NULL
+  }
+  list(name="t111D", coef.names=coef.names, inputs=inputs, minval = 0)
+}   
+                                                  
+################################################################################
+
+#' @templateVar name oooum (mask version of 111U type 3 node motif)
+                                                  
+InitErgmTerm.t111U<-function (nw, arglist, ..., version=packageVersion("ergm")) {
+  if(version <= as.package_version("3.9.4")){
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attrname","diff", "levels"),
+                        vartypes = c("character","logical", "character,numeric,logical"),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attrname
+    levels <- if(!is.null(a$levels)) I(a$levels) else NULL                    
+  }else{
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attr","diff", "levels"),
+                        vartypes = c(ERGM_VATTR_SPEC, "logical", ERGM_LEVELS_SPEC),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attr
+    levels <- a$levels  
+  }
+  diff <- a$diff;
+  if(!is.null(attrarg)){
+    nodecov <- ergm_get_vattr(attrarg, nw)
+    attrname <- attr(nodecov, "name")
+    u <- ergm_attr_levels(levels, nodecov, nw, levels = sort(unique(nodecov)))
+    nodecov <- match(nodecov,u,nomatch=length(u)+1)
+    ui <- seq(along=u)
+    if (!diff) {
+      coef.names <- paste("t111U",attrname,sep=".")
+      inputs <- c(nodecov)
+    } else {
+      #  Number of input parameters before covariates equals number of
+      #  unique elements in nodecov, namely length(u)
+      coef.names <- paste("t111U", attrname, u, sep=".")
+      inputs <- c(ui, nodecov)
+      attr(inputs, "ParamsBeforeCov") <- length(ui)
+    }
+  }else{
+#    No attributes (or diff)
+#    No covariates, so no need for "ParamsBeforeCov"
+    coef.names <- "t111U"
+    inputs <- NULL
+  }
+  list(name="t111U", coef.names=coef.names, inputs=inputs, minval = 0)
+}   
+                                                  
+################################################################################
+
+#' @templateVar name oooum (mask version of 030T type 3 node motif)
+                                                  
+InitErgmTerm.t030T<-function (nw, arglist, ..., version=packageVersion("ergm")) {
+  if(version <= as.package_version("3.9.4")){
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attrname","diff", "levels"),
+                        vartypes = c("character","logical", "character,numeric,logical"),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attrname
+    levels <- if(!is.null(a$levels)) I(a$levels) else NULL                    
+  }else{
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attr","diff", "levels"),
+                        vartypes = c(ERGM_VATTR_SPEC, "logical", ERGM_LEVELS_SPEC),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attr
+    levels <- a$levels  
+  }
+  diff <- a$diff;
+  if(!is.null(attrarg)){
+    nodecov <- ergm_get_vattr(attrarg, nw)
+    attrname <- attr(nodecov, "name")
+    u <- ergm_attr_levels(levels, nodecov, nw, levels = sort(unique(nodecov)))
+    nodecov <- match(nodecov,u,nomatch=length(u)+1)
+    ui <- seq(along=u)
+    if (!diff) {
+      coef.names <- paste("t030T",attrname,sep=".")
+      inputs <- c(nodecov)
+    } else {
+      #  Number of input parameters before covariates equals number of
+      #  unique elements in nodecov, namely length(u)
+      coef.names <- paste("t030T", attrname, u, sep=".")
+      inputs <- c(ui, nodecov)
+      attr(inputs, "ParamsBeforeCov") <- length(ui)
+    }
+  }else{
+#    No attributes (or diff)
+#    No covariates, so no need for "ParamsBeforeCov"
+    coef.names <- "t030T"
+    inputs <- NULL
+  }
+  list(name="t030T", coef.names=coef.names, inputs=inputs, minval = 0)
+}   
+                                                  
+################################################################################
+
+#' @templateVar name oooum (mask version of 030C type 3 node motif)
+                                                  
+InitErgmTerm.t030C<-function (nw, arglist, ..., version=packageVersion("ergm")) {
+  if(version <= as.package_version("3.9.4")){
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attrname","diff", "levels"),
+                        vartypes = c("character","logical", "character,numeric,logical"),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attrname
+    levels <- if(!is.null(a$levels)) I(a$levels) else NULL                    
+  }else{
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attr","diff", "levels"),
+                        vartypes = c(ERGM_VATTR_SPEC, "logical", ERGM_LEVELS_SPEC),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attr
+    levels <- a$levels  
+  }
+  diff <- a$diff;
+  if(!is.null(attrarg)){
+    nodecov <- ergm_get_vattr(attrarg, nw)
+    attrname <- attr(nodecov, "name")
+    u <- ergm_attr_levels(levels, nodecov, nw, levels = sort(unique(nodecov)))
+    nodecov <- match(nodecov,u,nomatch=length(u)+1)
+    ui <- seq(along=u)
+    if (!diff) {
+      coef.names <- paste("t030C",attrname,sep=".")
+      inputs <- c(nodecov)
+    } else {
+      #  Number of input parameters before covariates equals number of
+      #  unique elements in nodecov, namely length(u)
+      coef.names <- paste("t030C", attrname, u, sep=".")
+      inputs <- c(ui, nodecov)
+      attr(inputs, "ParamsBeforeCov") <- length(ui)
+    }
+  }else{
+#    No attributes (or diff)
+#    No covariates, so no need for "ParamsBeforeCov"
+    coef.names <- "t030C"
+    inputs <- NULL
+  }
+  list(name="t030C", coef.names=coef.names, inputs=inputs, minval = 0)
+}   
+                                                  
+################################################################################
+
+#' @templateVar name oooum (mask version of 201 type 3 node motif)
+                                                  
+InitErgmTerm.t201<-function (nw, arglist, ..., version=packageVersion("ergm")) {
+  if(version <= as.package_version("3.9.4")){
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attrname","diff", "levels"),
+                        vartypes = c("character","logical", "character,numeric,logical"),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attrname
+    levels <- if(!is.null(a$levels)) I(a$levels) else NULL                    
+  }else{
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attr","diff", "levels"),
+                        vartypes = c(ERGM_VATTR_SPEC, "logical", ERGM_LEVELS_SPEC),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attr
+    levels <- a$levels  
+  }
+  diff <- a$diff;
+  if(!is.null(attrarg)){
+    nodecov <- ergm_get_vattr(attrarg, nw)
+    attrname <- attr(nodecov, "name")
+    u <- ergm_attr_levels(levels, nodecov, nw, levels = sort(unique(nodecov)))
+    nodecov <- match(nodecov,u,nomatch=length(u)+1)
+    ui <- seq(along=u)
+    if (!diff) {
+      coef.names <- paste("201",attrname,sep=".")
+      inputs <- c(nodecov)
+    } else {
+      #  Number of input parameters before covariates equals number of
+      #  unique elements in nodecov, namely length(u)
+      coef.names <- paste("201", attrname, u, sep=".")
+      inputs <- c(ui, nodecov)
+      attr(inputs, "ParamsBeforeCov") <- length(ui)
+    }
+  }else{
+#    No attributes (or diff)
+#    No covariates, so no need for "ParamsBeforeCov"
+    coef.names <- "201"
+    inputs <- NULL
+  }
+  list(name="201", coef.names=coef.names, inputs=inputs, minval = 0)
+}   
+                                                  
+################################################################################
+
+#' @templateVar name oooum (mask version of 120D type 3 node motif)
+                                                  
+InitErgmTerm.t120D<-function (nw, arglist, ..., version=packageVersion("ergm")) {
+  if(version <= as.package_version("3.9.4")){
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attrname","diff", "levels"),
+                        vartypes = c("character","logical", "character,numeric,logical"),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attrname
+    levels <- if(!is.null(a$levels)) I(a$levels) else NULL                    
+  }else{
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attr","diff", "levels"),
+                        vartypes = c(ERGM_VATTR_SPEC, "logical", ERGM_LEVELS_SPEC),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attr
+    levels <- a$levels  
+  }
+  diff <- a$diff;
+  if(!is.null(attrarg)){
+    nodecov <- ergm_get_vattr(attrarg, nw)
+    attrname <- attr(nodecov, "name")
+    u <- ergm_attr_levels(levels, nodecov, nw, levels = sort(unique(nodecov)))
+    nodecov <- match(nodecov,u,nomatch=length(u)+1)
+    ui <- seq(along=u)
+    if (!diff) {
+      coef.names <- paste("t120D",attrname,sep=".")
+      inputs <- c(nodecov)
+    } else {
+      #  Number of input parameters before covariates equals number of
+      #  unique elements in nodecov, namely length(u)
+      coef.names <- paste("t120D", attrname, u, sep=".")
+      inputs <- c(ui, nodecov)
+      attr(inputs, "ParamsBeforeCov") <- length(ui)
+    }
+  }else{
+#    No attributes (or diff)
+#    No covariates, so no need for "ParamsBeforeCov"
+    coef.names <- "t120D"
+    inputs <- NULL
+  }
+  list(name="t120D", coef.names=coef.names, inputs=inputs, minval = 0)
+}   
+                                                  
+################################################################################
+
+#' @templateVar name oooum (mask version of 120U type 3 node motif)
+                                                  
+InitErgmTerm.t120U<-function (nw, arglist, ..., version=packageVersion("ergm")) {
+  if(version <= as.package_version("3.9.4")){
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attrname","diff", "levels"),
+                        vartypes = c("character","logical", "character,numeric,logical"),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attrname
+    levels <- if(!is.null(a$levels)) I(a$levels) else NULL                    
+  }else{
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attr","diff", "levels"),
+                        vartypes = c(ERGM_VATTR_SPEC, "logical", ERGM_LEVELS_SPEC),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attr
+    levels <- a$levels  
+  }
+  diff <- a$diff;
+  if(!is.null(attrarg)){
+    nodecov <- ergm_get_vattr(attrarg, nw)
+    attrname <- attr(nodecov, "name")
+    u <- ergm_attr_levels(levels, nodecov, nw, levels = sort(unique(nodecov)))
+    nodecov <- match(nodecov,u,nomatch=length(u)+1)
+    ui <- seq(along=u)
+    if (!diff) {
+      coef.names <- paste("t120U",attrname,sep=".")
+      inputs <- c(nodecov)
+    } else {
+      #  Number of input parameters before covariates equals number of
+      #  unique elements in nodecov, namely length(u)
+      coef.names <- paste("t120U", attrname, u, sep=".")
+      inputs <- c(ui, nodecov)
+      attr(inputs, "ParamsBeforeCov") <- length(ui)
+    }
+  }else{
+#    No attributes (or diff)
+#    No covariates, so no need for "ParamsBeforeCov"
+    coef.names <- "t120U"
+    inputs <- NULL
+  }
+  list(name="t120U", coef.names=coef.names, inputs=inputs, minval = 0)
+}   
+                                                  
+################################################################################
+
+#' @templateVar name oooum (mask version of 120C type 3 node motif)
+                                                  
+InitErgmTerm.t120C<-function (nw, arglist, ..., version=packageVersion("ergm")) {
+  if(version <= as.package_version("3.9.4")){
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attrname","diff", "levels"),
+                        vartypes = c("character","logical", "character,numeric,logical"),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attrname
+    levels <- if(!is.null(a$levels)) I(a$levels) else NULL                    
+  }else{
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attr","diff", "levels"),
+                        vartypes = c(ERGM_VATTR_SPEC, "logical", ERGM_LEVELS_SPEC),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attr
+    levels <- a$levels  
+  }
+  diff <- a$diff;
+  if(!is.null(attrarg)){
+    nodecov <- ergm_get_vattr(attrarg, nw)
+    attrname <- attr(nodecov, "name")
+    u <- ergm_attr_levels(levels, nodecov, nw, levels = sort(unique(nodecov)))
+    nodecov <- match(nodecov,u,nomatch=length(u)+1)
+    ui <- seq(along=u)
+    if (!diff) {
+      coef.names <- paste("t120C",attrname,sep=".")
+      inputs <- c(nodecov)
+    } else {
+      #  Number of input parameters before covariates equals number of
+      #  unique elements in nodecov, namely length(u)
+      coef.names <- paste("t120C", attrname, u, sep=".")
+      inputs <- c(ui, nodecov)
+      attr(inputs, "ParamsBeforeCov") <- length(ui)
+    }
+  }else{
+#    No attributes (or diff)
+#    No covariates, so no need for "ParamsBeforeCov"
+    coef.names <- "t120C"
+    inputs <- NULL
+  }
+  list(name="t120C", coef.names=coef.names, inputs=inputs, minval = 0)
+}   
+                                                  
+################################################################################
+
+#' @templateVar name oooum (mask version of 210 type 3 node motif)
+                                                  
+InitErgmTerm.t210<-function (nw, arglist, ..., version=packageVersion("ergm")) {
+  if(version <= as.package_version("3.9.4")){
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attrname","diff", "levels"),
+                        vartypes = c("character","logical", "character,numeric,logical"),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attrname
+    levels <- if(!is.null(a$levels)) I(a$levels) else NULL                    
+  }else{
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attr","diff", "levels"),
+                        vartypes = c(ERGM_VATTR_SPEC, "logical", ERGM_LEVELS_SPEC),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attr
+    levels <- a$levels  
+  }
+  diff <- a$diff;
+  if(!is.null(attrarg)){
+    nodecov <- ergm_get_vattr(attrarg, nw)
+    attrname <- attr(nodecov, "name")
+    u <- ergm_attr_levels(levels, nodecov, nw, levels = sort(unique(nodecov)))
+    nodecov <- match(nodecov,u,nomatch=length(u)+1)
+    ui <- seq(along=u)
+    if (!diff) {
+      coef.names <- paste("t210",attrname,sep=".")
+      inputs <- c(nodecov)
+    } else {
+      #  Number of input parameters before covariates equals number of
+      #  unique elements in nodecov, namely length(u)
+      coef.names <- paste("t210", attrname, u, sep=".")
+      inputs <- c(ui, nodecov)
+      attr(inputs, "ParamsBeforeCov") <- length(ui)
+    }
+  }else{
+#    No attributes (or diff)
+#    No covariates, so no need for "ParamsBeforeCov"
+    coef.names <- "t210"
+    inputs <- NULL
+  }
+  list(name="t210", coef.names=coef.names, inputs=inputs, minval = 0)
+}   
+                                                  
+################################################################################
+
+#' @templateVar name oooum (mask version of 300 type 3 node motif)
+                                                  
+InitErgmTerm.t300<-function (nw, arglist, ..., version=packageVersion("ergm")) {
+  if(version <= as.package_version("3.9.4")){
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attrname","diff", "levels"),
+                        vartypes = c("character","logical", "character,numeric,logical"),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attrname
+    levels <- if(!is.null(a$levels)) I(a$levels) else NULL                    
+  }else{
+    a <- check.ErgmTerm(nw, arglist, directed=TRUE,
+                        varnames = c("attr","diff", "levels"),
+                        vartypes = c(ERGM_VATTR_SPEC, "logical", ERGM_LEVELS_SPEC),
+                        defaultvalues = list(NULL,FALSE,NULL),
+                        required = c(FALSE,FALSE,FALSE))
+    attrarg <- a$attr
+    levels <- a$levels  
+  }
+  diff <- a$diff;
+  if(!is.null(attrarg)){
+    nodecov <- ergm_get_vattr(attrarg, nw)
+    attrname <- attr(nodecov, "name")
+    u <- ergm_attr_levels(levels, nodecov, nw, levels = sort(unique(nodecov)))
+    nodecov <- match(nodecov,u,nomatch=length(u)+1)
+    ui <- seq(along=u)
+    if (!diff) {
+      coef.names <- paste("t300",attrname,sep=".")
+      inputs <- c(nodecov)
+    } else {
+      #  Number of input parameters before covariates equals number of
+      #  unique elements in nodecov, namely length(u)
+      coef.names <- paste("t300", attrname, u, sep=".")
+      inputs <- c(ui, nodecov)
+      attr(inputs, "ParamsBeforeCov") <- length(ui)
+    }
+  }else{
+#    No attributes (or diff)
+#    No covariates, so no need for "ParamsBeforeCov"
+    coef.names <- "t300"
+    inputs <- NULL
+  }
+  list(name="t300", coef.names=coef.names, inputs=inputs, minval = 0)
+}   
+                                                  
+                                                                                  
 ################################################################################
 
 #' @templateVar name ooou (111U type 3 node motif)
