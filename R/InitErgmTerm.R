@@ -814,22 +814,22 @@ InitErgmTerm.t201<-function (nw, arglist, ..., version=packageVersion("ergm")) {
     nodecov <- match(nodecov,u,nomatch=length(u)+1)
     ui <- seq(along=u)
     if (!diff) {
-      coef.names <- paste("201",attrname,sep=".")
+      coef.names <- paste("t201",attrname,sep=".")
       inputs <- c(nodecov)
     } else {
       #  Number of input parameters before covariates equals number of
       #  unique elements in nodecov, namely length(u)
-      coef.names <- paste("201", attrname, u, sep=".")
+      coef.names <- paste("t201", attrname, u, sep=".")
       inputs <- c(ui, nodecov)
       attr(inputs, "ParamsBeforeCov") <- length(ui)
     }
   }else{
 #    No attributes (or diff)
 #    No covariates, so no need for "ParamsBeforeCov"
-    coef.names <- "201"
+    coef.names <- "t201"
     inputs <- NULL
   }
-  list(name="201", coef.names=coef.names, inputs=inputs, minval = 0)
+  list(name="t201", coef.names=coef.names, inputs=inputs, minval = 0)
 }   
                                                   
 ################################################################################
