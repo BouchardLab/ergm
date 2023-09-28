@@ -449,6 +449,129 @@ decay_vs_fixed <- function(a, name, no_curved_attrarg=TRUE){
 
 #=======================InitErgmTerm functions:  A============================#
 ################################################################################
+                                                  
+################################################################################
+
+#' @templateVar name celltype
+                                                  
+InitErgmTerm.celltype<-InitErgmTerm.match<-function (nw, arglist, ..., version=packageVersion("ergm")) {
+  if(version <= as.package_version("3.9.4")){
+    ### Check the network and arguments to make sure they are appropriate.
+    a <- check.ErgmTerm(nw, arglist, 
+                        varnames = c("attrname", "diff", "keep", "levels"),
+                        vartypes = c("character", "logical", "numeric", "character,numeric,logical"),
+                        defaultvalues = list(NULL, FALSE, NULL, NULL),
+                        required = c(TRUE, FALSE, FALSE, FALSE),
+                        dep.inform = list(FALSE, FALSE, "levels", FALSE))
+    attrarg <- a$attrname
+    levels <- if(!is.null(a$levels)) I(a$levels) else NULL
+  }else{
+    a <- check.ErgmTerm(nw, arglist, 
+                        varnames = c("attr", "diff", "keep", "levels"),
+                        vartypes = c(ERGM_VATTR_SPEC, "logical", "numeric", ERGM_LEVELS_SPEC),
+                        defaultvalues = list(NULL, FALSE, NULL, NULL),
+                        required = c(TRUE, FALSE, FALSE, FALSE),
+                        dep.inform = list(FALSE, FALSE, "levels", FALSE))
+    attrarg <- a$attr
+    levels <- a$levels  
+  }
+                        
+  ### Process the arguments
+  nodecov <- ergm_get_vattr(attrarg, nw)
+  attrname <- attr(nodecov, "name")
+  u <- ergm_attr_levels(levels, nodecov, nw, levels = sort(unique(nodecov)))
+  if(attr(a,"missing")["levels"] && !is.null(a$keep)) u <- u[a$keep]
+    
+    # uo is the list of terms to be displayed when summary is called
+    uo <- list()
+    for (i in u) {
+       for (j in u) {
+          st = sprintf("%s->%s", i,j)
+          uo <- append(uo,st)
+       }
+    }
+    
+    # the terms after the first N^2 ones are for mutual edges: total of (sum{i=0->N} i)
+    # it goes like 0<->0; 1<->0, 1<->1; 2<->0, ...
+    for (i in 1:length(u)) {
+       for (j in 1:i) {
+          st = sprintf("%s<->%s", u[i],u[j])
+          uo <- append(uo,st)
+       }
+    }    
+    
+
+  #   Recode to numeric, now the nodecov instead being characters(i.e. cell types)
+    # they will be renumbered from 1 to N
+  
+  nodecov <- match(nodecov,u,nomatch=length(u)+1)
+  # All of the "nomatch" should be given unique IDs so they never match:
+  dontmatch <- nodecov==(length(u)+1)
+  nodecov[dontmatch] <- length(u) + (1:sum(dontmatch))
+    
+    
+  num_type <- length(u)
+    
+  ui <- seq(1, length(u)**2) # this is useless, only copied over from the nodematch function
+  ### Construct the list to return, coeff is for each term
+  if (a$diff) {  #this is the case we are using, i.e. diff=T
+    coef.names <- paste("celltype", uo, sep=".")
+    inputs <- c(num_type, nodecov)
+  } else {
+    coef.names <- paste("celltype", paste(attrname,collapse="."), sep=".")
+    inputs <- nodecov
+  }
+  list(name="celltype",                                 #name: required
+       coef.names = coef.names,                          #coef.names: required
+       inputs =  inputs,
+       dependence = TRUE, # the mutual connection is dyad-dependent 
+       minval = 0
+       )
+}                                                  
+                                                  
+                                                  
+                                                  
+# path distance constraints using euclidean distance between xyz coor between two nodes
+                                                  
+InitErgmTerm.distance <- function(nw, arglist, ..., version=packageVersion("ergm")) {
+  if(version <= as.package_version("3.9.4")){
+    ### Check the network and arguments to make sure they are appropriate.
+    a <- check.ErgmTerm(nw, arglist, directed=NULL, bipartite=NULL,
+                        varnames = c("x","y","z","pow"),
+                        vartypes = c("character","character","character","numeric"),
+                        defaultvalues = list(NULL,NULL,NULL,1),
+                        required = c(TRUE,TRUE,TRUE,FALSE))
+    ### Process the arguments
+    covname <- a$attrname
+      
+    nodex <- get.node.attr(nw, a$x)
+    nodey <- get.node.attr(nw, a$y)
+    nodez <- get.node.attr(nw, a$z)
+    covnamex <- a$x
+    covnamex <- a$y
+    covnamex <- a$z   
+      
+  }else{
+    ### Check the network and arguments to make sure they are appropriate.
+    a <- check.ErgmTerm(nw, arglist, directed=NULL, bipartite=NULL,
+                        varnames = c("x","y","z","pow"),
+                        vartypes = c(ERGM_VATTR_SPEC,ERGM_VATTR_SPEC,ERGM_VATTR_SPEC,"numeric"),
+                        defaultvalues = list(NULL,NULL,NULL,1),
+                        required = c(TRUE,TRUE,TRUE,FALSE))
+    ### Process the arguments
+    nodex <- ergm_get_vattr(a$x, nw, accept="numeric")
+    nodey <- ergm_get_vattr(a$y, nw, accept="numeric")
+    nodez <- ergm_get_vattr(a$z, nw, accept="numeric")
+    
+  }
+  ### Construct the list to return
+  list(name="distance",                                     #name: required
+       coef.names = paste(paste("distance",if(a$pow!=1) a$pow else "",sep="")), #coef.names: required
+       inputs = c(a$pow,nodex, nodey, nodez),  # We need to include the nodal covariate for this term
+       dependence = FALSE # So we don't use MCMC if not necessary
+       )
+                          
+}                                                    
 
 #' @templateVar name oooum (mask version of 021D type 3 node motif)
                                                   

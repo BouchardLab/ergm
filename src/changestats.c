@@ -14,6 +14,76 @@
 
 /********************  changestats:  A    ***********/
 
+/*****************
+ changestat: d_celltype
+*****************/
+#define MAX(a,b) (((a)>(b))?(a):(b))
+#define MIN(a,b) (((a)<(b))?(a):(b))
+
+C_CHANGESTAT_FN(c_celltype) { 
+    double tailval, headval;
+    int j, num_type;
+  
+    num_type = INPUT_ATTRIB[0];
+
+  /* *** don't forget tail -> head; these are the nodecov(node attr) */  
+      /* *** +1 is to account for INPUT_ATTRIB[0]; -1 is for the R to C counting convention change*/  
+    /* *** the last -1 is to compensate for the recode to numeric in R code(that starts at 1)*/  
+    tailval = INPUT_PARAM[tail+1-1]-1;
+    headval = INPUT_PARAM[head+1-1]-1;
+    
+    
+    if(IS_OUTEDGE(head, tail)==1){  
+        
+        int j_reverse, j_mutual, st_idx = 0 , i, max_value, min_value;
+        
+        max_value = MAX(tailval, headval);
+        min_value = MIN(tailval, headval);
+        
+        for (i = 0; i <= max_value; ++i) {
+            st_idx += i;
+        }
+        /* *** the 1st N^2 change_stat are for single edges, and then the rest are for mutual edges(see R code for ordering) */
+        /* *** N*N is bypassing the single edge terms, then st_idx finds the mutual edge module where type max_value is start*/ 
+        /* *** and the min_value is the remainder*/ 
+        j_mutual = num_type*num_type+st_idx+min_value;
+        CHANGE_STAT[j_mutual] += edgestate ? -1.0 : 1.0;
+        
+        /* *** subtracting the count for the opposite edge, j_reverse is the reverse of the the single edge j(see below) */  
+        j_reverse = headval*num_type+tailval;
+        CHANGE_STAT[j_reverse] -= edgestate ? -1.0 : 1.0;
+        
+    } else {
+        /* *** for ordering of the single edge terms, the product gets to the module, and the headval is the remainder */  
+        j = tailval*num_type+headval;
+        CHANGE_STAT[j] += edgestate ? -1.0 : 1.0;
+    }
+
+    
+    
+   
+}
+
+/*****************                       
+ changestat: c_distance
+*****************/
+C_CHANGESTAT_FN(c_distance) { 
+  double change, p;
+
+  /* *** don't forget tail -> head */
+  p = INPUT_ATTRIB[0];
+    
+  if(p==1.0){
+    change = fabs(INPUT_ATTRIB[tail] - INPUT_ATTRIB[head]);
+  } else {
+    change = sqrt(pow(fabs(INPUT_ATTRIB[tail] - INPUT_ATTRIB[head]), p) + pow(fabs(INPUT_ATTRIB[tail+N_NODES] - INPUT_ATTRIB[head+N_NODES]), p) + pow(fabs(INPUT_ATTRIB[tail+2*N_NODES] - INPUT_ATTRIB[head+2*N_NODES]), p));
+      
+    /*printf("(%i, %i,%f, %f)\n",head, tail,INPUT_ATTRIB[head+1], INPUT_ATTRIB[tail+1]);*/
+  }
+  CHANGE_STAT[0] = edgestate ? -change : change;
+}
+
+
 /*****************                       
  changestat: c_oooum (111U type 3 node motif) matrix mask method A<--B<-->C
 *****************/
@@ -76,6 +146,7 @@ C_CHANGESTAT_FN(c_t021D) {
             }
             else {
                 change-=1;
+                //printf("-(%i,%i,%i)\n",tail,head,node3);
                 failed1 = 1;
                 break;
             }         
@@ -96,6 +167,7 @@ C_CHANGESTAT_FN(c_t021D) {
                 }
                 else {
                     change+=1;
+                    //printf("(%i,%i,%i)\n",tail,head,node3);
                     break;
                 }            
             }            
@@ -270,6 +342,7 @@ C_CHANGESTAT_FN(c_t021D) {
     if (CHANGE_STAT[0]!=0){
         printf("(%i,%i), %f \n",tail,head,CHANGE_STAT[0]);
     }*/    
+    
 }
 
 C_CHANGESTAT_FN(c_t021U) { 
