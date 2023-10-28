@@ -34,6 +34,7 @@ C_CHANGESTAT_FN(c_celltype) {
     
     
     if(IS_OUTEDGE(head, tail)==1){  
+        /* *** for mutual edge terms, the product gets to the module, and the headval is the remainder */  
         
         int j_reverse, j_mutual, st_idx = 0 , i, max_value, min_value;
         
@@ -99,9 +100,9 @@ C_CHANGESTAT_FN(c_t021D) {
 
     
     
-    int track_lst[573];
+    int track_lst[N_NODES];
     /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
-    for (int i = 1; i < 574; i++){
+    for (int i = 1; i < N_NODES+1; i++){
         track_lst[i]=0;
     }
     track_lst[head] = 1;
@@ -357,9 +358,9 @@ C_CHANGESTAT_FN(c_t021U) {
     /*int edge[6][9] = {{0, 1, 0, 1, 0, 1, 0, 0, 0},{0, 0, 1, 0, 0, 0, 1, 1, 0}, {0, 1, 1, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 1, 1, 1, 0}, {0, 1, 1, 0, 0, 0, 1, 0, 0}, {0, 0, 0, 1, 0, 1, 0, 1, 0}};*/
     
     
-    int track_lst[573];
+    int track_lst[N_NODES];
     /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
-    for (int i = 1; i < 574; i++){
+    for (int i = 1; i < N_NODES+1; i++){
         track_lst[i]=0;
     }
     track_lst[head] = 1;
@@ -610,9 +611,9 @@ C_CHANGESTAT_FN(c_t021C) {
     int edge[6][9] = {{0, 1, 0, 0, 0, 1, 0, 0, 0}, {0, 0, 1, 0, 0, 0, 0, 1, 0}, {0, 0, 1, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 1, 1, 0, 0}, {0, 1, 0, 0, 0, 0, 1, 0, 0}, {0, 0, 0, 1, 0, 0, 0, 1, 0}};
 
     
-    int track_lst[573];
+    int track_lst[N_NODES];
     /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
-    for (int i = 1; i < 574; i++){
+    for (int i = 1; i < N_NODES+1; i++){
         track_lst[i]=0;
     }
     track_lst[head] = 1;
@@ -863,9 +864,9 @@ C_CHANGESTAT_FN(c_t111D) {
     int edge[6][9] = {{0, 1, 0, 1, 0, 0, 0, 1, 0}, {0, 0, 1, 0, 0, 1, 1, 0, 0}, {0, 1, 0, 1, 0, 0, 1, 0, 0}, {0, 0, 1, 0, 0, 1, 0, 1, 0}, {0, 0, 1, 1, 0, 0, 1, 0, 0}, {0, 1, 0, 0, 0, 1, 0, 1, 0}};
 
     
-    int track_lst[573];
+    int track_lst[N_NODES];
     /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
-    for (int i = 1; i < 574; i++){
+    for (int i = 1; i < N_NODES+1; i++){
         track_lst[i]=0;
     }
     track_lst[head] = 1;
@@ -1117,9 +1118,9 @@ C_CHANGESTAT_FN(c_t111U) {
     int edge[6][9] = {{0, 1, 0, 1, 0, 1, 0, 0, 0},{0, 0, 1, 0, 0, 0, 1, 1, 0}, {0, 1, 1, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 1, 1, 1, 0}, {0, 1, 1, 0, 0, 0, 1, 0, 0}, {0, 0, 0, 1, 0, 1, 0, 1, 0}};
     
     
-    int track_lst[573];
+    int track_lst[N_NODES];
     /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
-    for (int i = 1; i < 574; i++){
+    for (int i = 1; i < N_NODES+1; i++){
         track_lst[i]=0;
     }
     track_lst[head] = 1;
@@ -1370,9 +1371,9 @@ C_CHANGESTAT_FN(c_t030T) {
     int edge[6][9] = {{0, 1, 1, 0, 0, 0, 0, 1, 0}, {0, 1, 1, 0, 0, 1, 0, 0, 0}, {0, 0, 0, 1, 0, 1, 1, 0, 0}, {0, 0, 1, 1, 0, 1, 0, 0, 0}, {0, 0, 0, 1, 0, 0, 1, 1, 0}, {0, 1, 0, 0, 0, 0, 1, 1, 0}};
     
     
-    int track_lst[573];
+    int track_lst[N_NODES];
     /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
-    for (int i = 1; i < 574; i++){
+    for (int i = 1; i < N_NODES+1; i++){
         track_lst[i]=0;
     }
     track_lst[head] = 1;
@@ -1623,9 +1624,9 @@ C_CHANGESTAT_FN(c_t030C) {
     int edge[2][9] = {{0, 1, 0, 0, 0, 1, 1, 0, 0}, {0, 0, 1, 1, 0, 0, 0, 1, 0}};
     
     
-    int track_lst[573];
+    int track_lst[N_NODES];
     /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
-    for (int i = 1; i < 574; i++){
+    for (int i = 1; i < N_NODES+1; i++){
         track_lst[i]=0;
     }
     track_lst[head] = 1;
@@ -1875,9 +1876,9 @@ C_CHANGESTAT_FN(c_t201) {
     int np = 3;    
     int edge[3][9] = {{0, 1, 0, 1, 0, 1, 0, 1, 0}, {0, 0, 1, 0, 0, 1, 1, 1, 0}, {0, 1, 1, 1, 0, 0, 1, 0, 0}};
     
-    int track_lst[573];
+    int track_lst[N_NODES];
     /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
-    for (int i = 1; i < 574; i++){
+    for (int i = 1; i < N_NODES+1; i++){
         track_lst[i]=0;
     }
     track_lst[head] = 1;
@@ -2128,9 +2129,9 @@ C_CHANGESTAT_FN(c_t120D) {
     int edge[3][9] = {{0, 0, 1, 1, 0, 1, 1, 0, 0}, {0, 1, 0, 1, 0, 0, 1, 1, 0}, {0, 1, 1, 0, 0, 1, 0, 1, 0}};
     
     
-    int track_lst[573];
+    int track_lst[N_NODES];
     /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
-    for (int i = 1; i < 574; i++){
+    for (int i = 1; i < N_NODES+1; i++){
         track_lst[i]=0;
     }
     track_lst[head] = 1;
@@ -2380,9 +2381,9 @@ C_CHANGESTAT_FN(c_t120U) {
     int np = 3;    
     int edge[3][9] = {{0, 1, 1, 0, 0, 0, 1, 1, 0}, {0, 1, 1, 1, 0, 1, 0, 0, 0}, {0, 0, 0, 1, 0, 1, 1, 1, 0}};
     
-    int track_lst[573];
+    int track_lst[N_NODES];
     /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
-    for (int i = 1; i < 574; i++){
+    for (int i = 1; i < N_NODES+1; i++){
         track_lst[i]=0;
     }
     track_lst[head] = 1;
@@ -2633,9 +2634,9 @@ C_CHANGESTAT_FN(c_t120C) {
     int edge[6][9] = {{0, 1, 1, 0, 0, 1, 1, 0, 0}, {0, 1, 1, 1, 0, 0, 0, 1, 0}, {0, 0, 1, 1, 0, 1, 0, 1, 0}, {0, 1, 0, 1, 0, 1, 1, 0, 0}, {0, 1, 0, 0, 0, 1, 1, 1, 0}, {0, 0, 1, 1, 0, 0, 1, 1, 0}};
     
     
-    int track_lst[573];
+    int track_lst[N_NODES];
     /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
-    for (int i = 1; i < 574; i++){
+    for (int i = 1; i < N_NODES+1; i++){
         track_lst[i]=0;
     }
     track_lst[head] = 1;
@@ -2886,9 +2887,9 @@ C_CHANGESTAT_FN(c_t210) {
     int edge[6][9] = {{0, 1, 1, 0, 0, 1, 1, 1, 0}, {0, 1, 1, 1, 0, 1, 0, 1, 0}, {0, 0, 1, 1, 0, 1, 1, 1, 0}, {0, 1, 1, 1, 0, 1, 1, 0, 0}, {0, 1, 0, 1, 0, 1, 1, 1, 0}, {0, 1, 1, 1, 0, 0, 1, 1, 0}};
     
     
-    int track_lst[573];
+    int track_lst[N_NODES];
     /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
-    for (int i = 1; i < 574; i++){
+    for (int i = 1; i < N_NODES+1; i++){
         track_lst[i]=0;
     }
     track_lst[head] = 1;
@@ -3139,9 +3140,9 @@ C_CHANGESTAT_FN(c_t300) {
     int edge[1][9] = {{0, 1, 1, 1, 0, 1, 1, 1, 0}};
     
     
-    int track_lst[573];
+    int track_lst[N_NODES];
     /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
-    for (int i = 1; i < 574; i++){
+    for (int i = 1; i < N_NODES+1; i++){
         track_lst[i]=0;
     }
     track_lst[head] = 1;
