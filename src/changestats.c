@@ -2632,7 +2632,7 @@ C_CHANGESTAT_FN(c_t120C) {
     
     int np = 6;    
     int edge[6][9] = {{0, 1, 1, 0, 0, 1, 1, 0, 0}, {0, 1, 1, 1, 0, 0, 0, 1, 0}, {0, 0, 1, 1, 0, 1, 0, 1, 0}, {0, 1, 0, 1, 0, 1, 1, 0, 0}, {0, 1, 0, 0, 0, 1, 1, 1, 0}, {0, 0, 1, 1, 0, 0, 1, 1, 0}};
-    
+    printf("Num of nodes: %f\n", N_NODES);
     
     int track_lst[N_NODES];
     /*this is the list that keep track of the 3rd node in the combo that has been checked...*/
